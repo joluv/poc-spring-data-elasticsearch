@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<meta charset="utf-8" />
+</head>
+
+<body>
+	<div>
+		<div class="span8">
+			<form th:action="@{/search}" role="form" method="post">
+				<div class="form-group">
+					<label for="name" class="span2"> <span>Texte</span>
+					</label>
+
+					<div class="span4">
+						<input type="text" th:name="text" th:id="text" />
+					</div>
+				</div>
+				<div class="form-group span6">
+					<button class="btn btn-primary" type="submit">Valider</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
