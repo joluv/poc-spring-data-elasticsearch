@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+    <property name="LOGS_FOLDER" value="${catalina.base}/logs"/>
+    <property name="OLD_LOGS_FOLDER" value="${LOGS_FOLDER}/old"/>
+
+    <!-- Log en console -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date %-5level [%thread] - [%logger] - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+    </appender>
+
+    <!-- Log les erreurs ou les dysfonctionnements -->
+    <appender name="logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS_FOLDER}/poc-elasticsearch.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${OLD_LOGS_FOLDER}/poc-elasticsearch.%d{yyyyMMdd}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy/MM/dd HH:mm:ss,SSS} %X{username} %X{ipuser} %X{ipproxy} %X{hostname} [%thread] %-5level %logger{36} - %m %throwable{0}%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!-- Tous les messages de n'importe quel framework ayant à minima le niveau WARN -->
+    <root level="INFO">
+        <appender-ref ref="logfile"/>
+        <appender-ref ref="console"/>
+    </root>
+
+	<logger name="fr.jansem" level="DEBUG">
+		<appender-ref ref="logfile" />
+		<appender-ref ref="console"/>
+    </logger>
+
+</configuration>
